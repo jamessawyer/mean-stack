@@ -1,0 +1,29 @@
+{
+  "name": "mean-stack",
+  "version": "1.0.0",
+  "description": "\"# mean-stack\"",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jamessawyer/mean-stack.git"
+  },
+  "keywords": [
+    "MEAN",
+    "Angular4",
+    "Express",
+    "MongoDB"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jamessawyer/mean-stack/issues"
+  },
+  "homepage": "https://github.com/jamessawyer/mean-stack#readme",
+  "dependencies": {
+    "express": "^4.15.3",
+    "mongoose": "^4.10.8"
+  }
+}
