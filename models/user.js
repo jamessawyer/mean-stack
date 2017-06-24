@@ -88,7 +88,8 @@ let validPwdChecker = (pwd) => {
     if (!pwd) {
         return false;
     } else {
-        const regExp = new RegExp(/^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\d])(?=.*?[\W]).{8,35}$/);     
+        // const regExp = new RegExp(/^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[\d])(?=.*?[\W]).{8,35}$/);  
+        const regExp = new RegExp(/^[a-zA-Z0-9!@#$%^&*]{6,30}$/);   
         return regExp.test(pwd);
     }
 }

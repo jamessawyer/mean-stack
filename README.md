@@ -41,3 +41,13 @@ userSchema.method.comparePassword = (password) => {
     return bcrypt.compareSync(password, this.password);
 }
 ```
+
+### register-form
+
+1. reactive form表单的使用
+  - **`ReactiveFormsModule`**模块， **`FormBuilder`**, **`FormGroup`**, **`FormControl`**等指令
+  - **`Validators`** 自带的表单验证，以及自己添加的表单验证方式 **`Validators.compose()`** 多个验证方法
+
+2 **`[formGroup]="form"`** 指令的使用
+3 **`form.controls.username.errors?.required`** 等表单验证的方式
+4 **`?.`** 安全验证符号的使用
