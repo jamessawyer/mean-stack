@@ -1,28 +1,37 @@
 
 <h5 class="page-header register-title">用户注册</h5>
+
+<div class="row show-hide-message text-center">
+  <div [ngClass]="messageClass">
+    {{ message }}
+  </div>
+</div>
+
 <div class="container register-container">
   <form [formGroup]="form" class="register-form" (submit)="onRegisterSubmit()">
 
     <div class="form-group">
       <label for="username">用户名</label>
-      <div [ngClass]="{'has-error': (form.controls.username.errors && form.controls.username.dirty), 'has-success': !form.controls.username.errors}">
-        <input type="text" name="username" formControlName="username" class="form-control" autocomplete="off" placeholder="用户名为数字字母下划线">
+      <div [ngClass]="{'has-error': (form.controls.username.errors && form.controls.username.dirty) || (!usernameValid && form.controls.username.dirty), 'has-success': !form.controls.username.errors && usernameValid}">
+        <input type="text" name="username" formControlName="username" (blur)="checkUsername()" class="form-control" autocomplete="off" placeholder="用户名为数字字母下划线">
         <ul class="help-block">
           <li [style.list-style]="'none'" *ngIf="(form.controls.username.errors?.required && form.controls.username.dirty)">必填字段</li>
-          <li [style.list-style]="'none'" *ngIf="(form.controls.username.errors?.minlength || form.controls.username.errors?.maxlength)">用户名为3-20个字符</li>
+          <li [style.list-style]="'none'" *ngIf="(form.controls.username.errors?.minlength || form.controls.username.errors?.maxlength)">用户名为2-20个字符</li>
           <li [style.list-style]="'none'" *ngIf="form.controls.username.errors?.validateUsername && form.controls.username.dirty">该用户名不合法，用户名为数字，字母，下划线</li>
+          <li [style.list-style]="'none'" *ngIf="usernameMessage">{{ usernameMessage }}</li>
         </ul>
       </div>
     </div>
 
     <div class="form-group">
       <label for="email">邮箱</label>
-      <div [ngClass]="{'has-error': (form.controls.email.errors && form.controls.email.dirty), 'has-success': !form.controls.email.errors}">
-        <input type="text" name="username" formControlName="email" class="form-control" autocomplete="off" placeholder="邮箱地址">
+      <div [ngClass]="{'has-error': (form.controls.email.errors && form.controls.email.dirty) || (!emailValid && form.controls.email.dirty), 'has-success': !form.controls.email.errors && emailValid}">
+        <input type="text" name="username" formControlName="email" (blur)="checkEmail()" class="form-control" autocomplete="off" placeholder="邮箱地址">
         <ul class="help-block">
           <li [style.list-style]="'none'" *ngIf="(form.controls.email.errors?.required && form.controls.email.dirty)">必填字段</li>
           <li [style.list-style]="'none'" *ngIf="(form.controls.email.errors?.minlength || form.controls.email.errors?.maxlength) && form.controls.email.dirty">邮箱为5-30个字符</li>
           <li [style.list-style]="'none'" *ngIf="form.controls.email.errors?.validateEmail && form.controls.email.dirty">该邮箱格式不正确</li>
+          <li [style.list-style]="'none'" *ngIf="emailMessage">{{ emailMessage }}</li>
         </ul>
       </div>
     </div>
@@ -51,7 +60,7 @@
       </div>
     </div>
 
-    <input type="submit" [disabled]="form.invalid" class="btn btn-primary btn-lg register-submit" value="提交">
+    <input type="submit" [disabled]="form.invalid || processing || !usernameValid || !emailValid" class="btn btn-primary btn-lg register-submit" value="提交">
 
   </form>
 </div>

@@ -46,7 +46,7 @@ let usernameLengthChecker = (username) => {
     if (!username) {
         return false;
     } else {
-        if (username.length < 3 || username.length > 20) {
+        if (username.length < 2 || username.length > 20) {
             return false;
         } else {
             return true;
@@ -77,7 +77,7 @@ let pwdLengthChecker = (pwd) => {
     if (!pwd) {
         return false;
     } else {
-        if (pwd.length < 8 || pwd.length > 35) {
+        if (pwd.length < 6 || pwd.length > 30) {
             return false;
         } else {
             return true;
@@ -95,7 +95,7 @@ let validPwdChecker = (pwd) => {
 }
 const pwdValidators = [
     {
-        validator: pwdLengthChecker, message: '密码长度应该在8-35个字符'
+        validator: pwdLengthChecker, message: '密码长度应该在6-30个字符'
     },
     {
         validator: validPwdChecker, message: '存在非法字符'

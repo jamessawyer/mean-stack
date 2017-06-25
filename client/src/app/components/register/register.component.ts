@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -9,10 +11,23 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class RegisterComponent implements OnInit {
   form: FormGroup;
 
+  message: string; // 提交之后返回的消息
+  messageClass: string;
+
+  processing: boolean = false; // 是否正在提交，组织多次提交
+
+  emailValid: boolean = true; // 邮箱是否有效
+  emailMessage: string;
+
+  usernameValid: boolean = true; // 用户名是否有效
+  usernameMessage: string;
+
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router
   ) {
-    this.createForm();
+    this.createForm(); // 创建angular表单当组件加载时
    }
 
   createForm() {
@@ -21,7 +36,7 @@ export class RegisterComponent implements OnInit {
         '', 
         Validators.compose([ // 多个验证使用 'Validators.compose()' 方法
           Validators.required,
-          Validators.minLength(3),
+          Validators.minLength(2),
           Validators.maxLength(20),
           this.validateUsername                         
         ])
@@ -90,8 +105,75 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  // 开启表单
+  enableForm() {
+    this.form.controls['username'].enable();
+    this.form.controls['email'].enable();
+    this.form.controls['password'].enable();
+    this.form.controls['confirm'].enable();
+  }
+
+  // 关闭表单
+  disableForm() {
+    this.form.controls['username'].disable();
+    this.form.controls['email'].disable();
+    this.form.controls['password'].disable();
+    this.form.controls['confirm'].disable();
+  }
+
+  // 提交表单
   onRegisterSubmit() {
-    console.log(this.form);
+    /**
+     * 当点击 '提交' 时
+     * processing设置为true
+     * 然后禁用表单，不允许输入
+     */
+    this.processing = true;
+    this.disableForm();     
+    const user = {
+      username: this.form.get('username').value,
+      email: this.form.get('email').value,
+      password: this.form.get('password').value
+    };
+
+    this.authService.registerUser(user).subscribe(data => {
+      if (!data.success) {
+        this.messageClass = 'alert alert-danger';
+        this.message = data.message;
+        this.enableForm(); // 如果有错误则开启输入
+      } else {
+        this.messageClass = 'alert alert-success';
+        this.message = data.message;
+        setTimeout(() => { // 成功注册后跳转到 '/login' 页面
+          this.router.navigate(['/login']);
+        }, 1500);
+      }
+      console.log('data', data);
+    })
+  }
+
+  checkEmail() {
+    this.authService.checkEmail(this.form.get('email').value).subscribe(data => {
+      if (!data.success) {
+        this.emailValid = false;
+        this.emailMessage = data.message;
+      } else {
+        this.emailValid = true;
+        this.emailMessage = data.message;
+      }
+    });
+  }
+
+  checkUsername() {
+    this.authService.checkUsername(this.form.get('username').value).subscribe(data => {
+      if (!data.success) {
+        this.usernameValid = false;
+        this.usernameMessage = data.message;
+      } else {
+        this.usernameValid = true;
+        this.usernameMessage = data.message;
+      }
+    });
   }
 
   ngOnInit() {

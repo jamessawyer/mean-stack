@@ -51,3 +51,48 @@ userSchema.method.comparePassword = (password) => {
 2 **`[formGroup]="form"`** 指令的使用
 3 **`form.controls.username.errors?.required`** 等表单验证的方式
 4 **`?.`** 安全验证符号的使用
+
+
+### register-http
+
+2017年6月25日 12:34:04
+
+跨域问题：
+
+1. 使用 **`cors`** npm 包对跨域进行简单的处理
+
+```
+const cors = require('cors');
+app.use(cors({
+    origin: 'http://localhost:4200'
+}))
+```
+
+客户端：
+ 
+1. 使用**`Http`**模块，Restful操作
+2. **`client/src/app/services/auth.service.ts`** 对注册进行验证的服务
+3. **`registerUser(user)`** 注册用户, **`POST`**请求
+4. **`checkEmail()`** 对邮箱有效性进行检测，邮箱是否已经被注册 **`GET`** 请求
+5. **`checkUsername()`** 对用户名进行检测， 用户名是否已经被注册 **`GET`** 请求
+6. **`client/src/app/components/register.component.ts`** 对表单提交进行处理， 禁止多次提交， 另外添加新的验证
+
+
+服务端：
+
+1. **`routes/authentication.js`** 新增对 **`/authentication/checkEmail/:email`** GET请求的处理
+2. **`routes/authentication.js`** 新增对 **`/authentication/checkUsername/:username`** GET请求的处理
+3. **`routes/authentication.js`** 对Mongo数据库进行查询
+
+使用angular-cli命令行生成 service:
+
+```
+// auth是服务的名称
+ng g service auth 
+```
+
+注意产生的服务需要手动的添加到 providers中，本分支之间添加到 'App.module.ts' 中的 '@NgModule' 元数据 providers中
+
+**改动：**
+
+1. 对用户名长度改动： 从最少3个字符，改为了至少2个字符

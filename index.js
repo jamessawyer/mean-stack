@@ -3,6 +3,7 @@ const app = express();
 const router = express.Router();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors'); // 处理跨域
 const path = require('path');
 const config = require('./config/database');
 const authentication = require('./routes/authentication')(router);
@@ -22,6 +23,9 @@ mongoose.connect(db_url, (err) => {
 /**
  * 中间件
  */
+app.use(cors({
+    origin: 'http://localhost:4200'
+}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
