@@ -2,6 +2,18 @@
 
 ## 分支介绍
 
+1. 服务端设置 					(server-setup)					
+2. 客户端路由设置
+3. 注册表单样式，Reactive Form  (register-form)
+4. 注册表单api                  (register-api)
+	- 后端数据结构model
+	- 后端restful请求处理
+	
+5. 注册http， 对提交表单进行处理 (register-http)
+   - post表单
+   - 对表单有效性进行处理
+   - 自定义服务,对http请求进行处理
+
 ### register-api
 
 1. **`models/user.js`** 定义 'User'(注册用户) 数据模型： 提供后端验证(email, 用户名, 密码)
