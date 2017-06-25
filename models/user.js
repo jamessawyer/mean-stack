@@ -146,8 +146,8 @@ userSchema.pre('save', function(next) {
  * schema添加方法 
  * 用来对比密码是否正确, 用于Login
  */
-userSchema.method.comparePassword = (password) => {
-    return bcrypt.compareSync(password, this.password);
+userSchema.methods.comparePassword = function(password) {
+    return bcrypt.compareSync(password, this.password); // 比较登录密码和数据库中的密码
 }
 
 module.exports = mongoose.model('User', userSchema);

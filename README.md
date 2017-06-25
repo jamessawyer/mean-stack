@@ -14,6 +14,11 @@
    - 对表单有效性进行处理
    - 自定义服务,对http请求进行处理
 
+6. 登录验证 对登录信息进行比对验证 (login-authentication) 
+  = 登录页面表单，登录验证
+  - 登录查询数据库
+  - 登录跳转等
+
 ### register-api
 
 1. **`models/user.js`** 定义 'User'(注册用户) 数据模型： 提供后端验证(email, 用户名, 密码)
@@ -108,3 +113,23 @@ ng g service auth
 **改动：**
 
 1. 对用户名长度改动： 从最少3个字符，改为了至少2个字符
+
+
+### login-authentication
+
+2017年6月25日 22:59:08
+
+客户端：
+  1. 新增 'login', 'profile' 组件
+  2. 新增 **`angular2-flash-messages`** npm包提供跳转消息提示
+  3. 新增 **`angular2-jwt`** npm包， 用于显示和隐藏页面元素,根据是否登录状态
+  4. 将用户登录成功之后，后台返回的 'token' 存储在localStorage中
+  5. 对带权限验证的请求，使用 **`RequestOptions`** 和 **`Headers`**添加头信息
+
+
+
+服务端：
+  1. 新增 **`jsonwebtoken`** npm包, 返回 token 信息给前端
+  2. 新增 **`\authentication\login`** 后端路由
+  3. 新增 **`\authentication\profile`** 后端路由
+  4. 自定义中间件对前端提交的token信息和后台进行比对，来确认是否登录， 使用 **`jwt`**

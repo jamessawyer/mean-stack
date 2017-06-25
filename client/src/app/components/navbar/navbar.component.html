@@ -7,20 +7,19 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" routerLink="/home">MEAN Stack Blog</a>
+          <a class="navbar-brand" routerLink="/">MEAN Stack Blog</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-left">
-            <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/home">Home</a></li>
+            <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/">主页</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard">Dashboard</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="">Profile</a></li>
-            <li><a href="">Blog</a></li>
-            <li><a href="">Login</a></li>
-            <li><a href="">Logout</a></li>
-            <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/register">Register</a></li>
+            <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard">Dashboard</a></li>
+            <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/profile">个人中心</a></li>
+            <li *ngIf="authService.loggedIn()" ><a href="">Blog</a></li>
+            <li><a *ngIf="!authService.loggedIn()" routerLink="/login">登录</a></li>
+            <li><a href="#" *ngIf="authService.loggedIn()" (click)="onLogoutClick()">退出</a></li>
+            <li *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/register">注册</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>

@@ -1,0 +1,37 @@
+
+<h5 class="page-header register-title">用户登录</h5>
+
+<div class="row show-hide-message text-center">
+  <div [ngClass]="messageClass">
+    {{ message }}
+  </div>
+</div>
+
+<div class="container register-container">
+  <form [formGroup]="form" class="login-form" (submit)="onLoginSubmit()">
+
+    <div class="form-group">
+      <label for="username">用户名</label>
+      <div [ngClass]="{'has-error': (form.controls.username.errors && form.controls.username.dirty), 'has-success': form.controls.username.valid && form.controls.username.dirty}">
+        <input type="text" name="username" formControlName="username" class="form-control" autocomplete="off" placeholder="请输入用户名">
+        <ul class="help-block">
+          <li [style.list-style]="'none'" *ngIf="(form.controls.username.errors?.required && form.controls.username.dirty)">必填字段</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="password">密码</label>
+      <div [ngClass]="{'has-error': (form.controls.password.errors && form.controls.password.dirty), 'has-success': form.controls.password.valid && form.controls.password.dirty}">
+        <input type="password" name="password" formControlName="password" class="form-control" autocomplete="off" placeholder="输入密码">
+        <ul class="help-block">
+          <li [style.list-style]="'none'" *ngIf="(form.controls.password.errors?.required && form.controls.password.dirty)">必填字段</li>
+        </ul>
+      </div>
+    </div>
+
+    <input type="submit" [disabled]="form.invalid || processing" class="btn btn-primary btn-lg login-submit" value="登录">
+
+  </form>
+</div>
+

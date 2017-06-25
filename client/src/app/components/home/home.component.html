@@ -2,8 +2,8 @@
   <h1>MEAN Stack Application</h1>
   <p class="lead">Welcome to the MEAN Stack Application by <strong>James Sawyer</strong></p>
   <div>
-    <a routerLink="/register" class="btn btn-primary">Register</a>
-    <a href="#" class="btn btn-default">Login</a>
+    <a *ngIf="!authService.loggedIn()" routerLink="/register" class="btn btn-primary">注 册</a>
+    <a *ngIf="!authService.loggedIn()" routerLink="/login" class="btn btn-default">登 录</a>
   </div>
 </div>
 

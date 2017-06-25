@@ -146,9 +146,9 @@ export class RegisterComponent implements OnInit {
         this.message = data.message;
         setTimeout(() => { // 成功注册后跳转到 '/login' 页面
           this.router.navigate(['/login']);
-        }, 1500);
+        }, 1000);
       }
-      console.log('data', data);
+      // console.log('data', data);
     })
   }
 
