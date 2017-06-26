@@ -11,7 +11,7 @@ import { AuthService } from '../services/auth.service';
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-    redirectUrl: string; // 从定向之后的url
+    redirectUrl: string; // 从定向之前的url
 
     constructor(
         private authService: AuthService,
