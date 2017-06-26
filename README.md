@@ -133,3 +133,21 @@ ng g service auth
   2. 新增 **`\authentication\login`** 后端路由
   3. 新增 **`\authentication\profile`** 后端路由
   4. 自定义中间件对前端提交的token信息和后台进行比对，来确认是否登录， 使用 **`jwt`**
+
+
+## authguard
+
+2017年6月27日 01:00:59
+
+阻止登录或没登录的用户访问某些页面，并进行跳转
+
+客户端：
+  - 新增 guards 文件夹
+  - 新增 'auth.guard.ts' 文件，主要用于 未登录用户不能访问某些页面，比如说未登录不能访问 '个人中心'， 'dashboard', 并进行跳转至登录页面， 使用 **`ActivateRouterSnapshot`** 和 **`RouterStateSnapshot`**对跳转之前的url进行保存，这样登录之后即可返回到用户登陆之前想要登录的页面
+  - 新增 'notauth.guard.ts' 文件， 这个作用和上面的正好相反，如果用户已经登录了，则组织用户访问某些页面，比如注册和登录
+
+变化:
+  - 将css文件从bootstrap变为了 **[Bootswatch - bootstrap的主题](https://bootswatch.com/simplex/)** 
+
+发现并待解决的bug:
+  - register 页面会返回 '没有token' 的错误 信息，这个不应该显示才对
