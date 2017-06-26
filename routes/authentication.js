@@ -39,7 +39,7 @@ module.exports = (router) => {
                                         res.json({ success: false, message: err.errors.password.message })
                                     }
                                 } else {
-                                    res.json({ success: false, message: '保存用户失败：', err})
+                                    res.json({ success: false, message: '保存用户失败：' + err})
                                 }
                             }
                             
@@ -108,7 +108,7 @@ module.exports = (router) => {
             if (!req.body.password) {
                res.json({ success: false, message: '没有输入密码'}); 
             } else {
-                User.findOne({ username: req.body.username.toLowerCase() }, (err, user) => {
+                User.findOne({ username: req.body.username }, (err, user) => {
                     if (err) {
                         res.json({ success: false, message: err});
                     } else {

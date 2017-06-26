@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { AuthGuard } from '../../guards/auth.guard';
 
 @Component({
   selector: 'app-login',
@@ -14,11 +15,13 @@ export class LoginComponent implements OnInit {
   processing: boolean = false;
   messageClass: string;
   message: string;
+  priviousUrl: string;
 
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private authGuard: AuthGuard
   ) { 
     this.createForm();
   }
@@ -55,18 +58,30 @@ export class LoginComponent implements OnInit {
         this.messageClass = 'alert alert-danger';
         this.message = data.message;
         this.processing = false;
+        this.enableForm();
       } else {
         this.messageClass = 'alert alert-success';
         this.message = data.message;
         this.authService.storeUserData(data.token, data.user); // 将后台返回的信息存在localStorage中
         setTimeout(() => {
-          this.router.navigate(['/dashboard']);
-        }, 1500);
+          if (this.priviousUrl) { // 如果这个url存在的话，则登录之后跳转到先前的页面
+            this.router.navigate([this.priviousUrl]);
+          } else {
+            this.router.navigate(['/dashboard']);
+          }
+        }, 1000);
       }
     })
   }
 
   ngOnInit() {
+    // 在这个组件初始化前先检测重定向url是否存在
+    if (this.authGuard.redirectUrl) {
+      this.messageClass = 'alert alert-danger';
+      this.message = '必须登录才能查看';
+      this.priviousUrl = this.authGuard.redirectUrl; // 将重定向来的url保存
+      this.authGuard.redirectUrl = undefined; // 然后将重定向的url清空
+    }
   }
 
 }

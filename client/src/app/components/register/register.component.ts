@@ -63,7 +63,7 @@ export class RegisterComponent implements OnInit {
         '', 
         Validators.required
       ]
-    }, { validator: this.matchingPasswords('password', 'confirm')});
+    }, { validator: this.matchingPasswords('password', 'confirm')}); // 添加自定义验证来匹配密码
   }
 
   // 自定义验证
