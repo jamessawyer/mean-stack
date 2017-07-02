@@ -16,7 +16,7 @@
           <ul class="nav navbar-nav navbar-right">
             <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/dashboard">Dashboard</a></li>
             <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/profile">个人中心</a></li>
-            <li *ngIf="authService.loggedIn()" ><a href="">Blog</a></li>
+            <li *ngIf="authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/blog">Blog</a></li>
             <li><a *ngIf="!authService.loggedIn()" routerLink="/login">登录</a></li>
             <li><a href="#" *ngIf="authService.loggedIn()" (click)="onLogoutClick()">退出</a></li>
             <li *ngIf="!authService.loggedIn()" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"><a routerLink="/register">注册</a></li>

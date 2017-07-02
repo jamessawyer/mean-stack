@@ -1,3 +1,106 @@
-<p>
-  blog works!
-</p>
+<h5 [style.font-weight]="700" class="page-header register-title" *ngIf="!newPost">文章列表</h5>
+<h5 [style.font-weight]="700" class="page-header register-title" *ngIf="newPost">写文章</h5>
+
+<div class="row show-hide-message text-center" *ngIf="message && newPost">
+  <div [ngClass]="messageClass">
+    {{ message }}
+  </div>
+</div>
+
+<button type="button" class="btn btn-warning" (click)="newBlogForm()" *ngIf="!newPost">写文章</button>
+<button type="button" [disabled]="loadingBlogs" class="btn btn-default" (click)="reloadBlogs()" *ngIf="!newPost"><i class="fa fa-refresh" aria-hidden="true"></i>&nbsp;&nbsp;刷新</button>
+
+<!--文章-->
+
+<form [formGroup]="form" name="blogForm" (ngSubmit)="onBlogSubmit()" *ngIf="newPost">
+  <div class="form-group">
+    <label for="title">文章标题</label>
+    <div [ngClass]="{'has-success': form.controls.title.valid && form.controls.title.dirty, 'has-error': form.controls.title.dirty && form.controls.title.errors}">
+      <input type="text" name="title" class="form-control" placeholder="文章标题" autocomplete="off" formControlName="title">      
+    </div>
+    <ul>
+      <li *ngIf="form.controls.title.dirty && form.controls.title.errors?.required">请填写文章标题</li>
+      <li *ngIf="form.controls.title.dirty && form.controls.title.errors?.maxlength">文章标题不能超过50个字</li>      
+    </ul>
+  </div>
+
+  <div class="form-group">
+    <label for="body">文章内容</label>
+    <div [ngClass]="{'has-success': form.controls.body.valid && form.controls.body.dirty, 'has-error': form.controls.body.dirty && form.controls.body.errors}">
+      <textarea name="body" formControlName="body" class="form-control" cols="30" rows="15"></textarea>
+    </div>
+    <ul>
+      <li *ngIf="form.controls.body.dirty && form.controls.body.errors?.required">文章内容不能为空</li>
+      <li *ngIf="form.controls.body.dirty && form.controls.body.errors?.maxlength">文章不超过3000字</li>      
+    </ul>
+  </div>
+
+  <button type="button" (click)="goBack()"  [disabled]="processing" class="btn btn-sm btn-warning">返回</button>
+  <button type="submit"  [disabled]="processing || form.invalid" class="btn btn-sm btn-primary">提交</button>
+</form>
+
+<div *ngIf="!newPost" class="container-blogs">
+
+  <div class="panel panel-group">
+
+    <div class="panel-heading">
+      <div class="panel-title">如何学习angular</div>
+    </div>
+
+    <!--panel-body-->
+    <div class="panel-body">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae expedita ad, possimus hic quasi, optio, debitis sed consequuntur dolor eveniet saepe animi labore amet sit inventore libero quos quod quia.
+    </div>
+
+    <!-- panel-footer start -->
+    <div class="panel-footer">
+      <strong>作者：</strong> james sawyer
+      <br>
+      <strong>日期：</strong> July 2, 2017
+      <br>
+      <div>
+        <strong>喜欢：</strong>12
+        <br>
+        <strong>反对：</strong>30 
+      </div>
+      <a href="#"><button type="button" class="btn btn-primary btn-sm">编辑</button></a>
+      <a href="#"><button type="button" class="btn btn-warning btn-sm">删除</button></a>
+
+      <div class="dropdown">
+        <button type="button" class="btn btn-sm btn-primary">
+          <i class="fa fa-thumbs-up" aria-hidden="true"></i>&nbsp;&nbsp;喜欢：20
+        </button>
+        <button class="dropdown-content">
+          <a href="#">louis</a>
+          <a href="#">kobe</a>
+          <a href="#">james</a>          
+        </button>
+      </div>
+
+      <div class="dropdown">
+        <button type="button" class="btn btn-sm btn-warning">
+          <i class="fa fa-thumbs-down" aria-hidden="true"></i>&nbsp;&nbsp;反对：20
+        </button>
+        <button class="dropdown-content">
+          <a href="#">harden</a>
+          <a href="#">westbrook</a>
+          <a href="#">wade</a>          
+        </button>
+      </div>
+    </div>
+     <!-- panel-footer end -->
+
+     <ul class="list-group">
+       <li class="list-group-item">
+         <button type="button" class="btn btn-danger btn-sm" (click)="draftComment()">文章评论</button>
+         <br>
+         <form [formGroup]="form" name="commentForm" (ngSubmit)="onCommentSubmit()">
+           <textarea rows="10" cols="30" class="form-control"></textarea>
+           <button type="submit" class="btn btn-info btn-sm">发表评论</button>
+           <button type="button" class="btn btn-warning btn-sm">取消</button>
+         </form>
+       </li>
+     </ul>
+  </div>
+
+</div>

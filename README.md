@@ -151,3 +151,19 @@ ng g service auth
 
 发现并待解决的bug:
   - register 页面会返回 '没有token' 的错误 信息，这个不应该显示才对
+
+
+## create-blogs
+
+2017年7月2日 22:49:02
+
+客户端：
+  - 新增 blog 组件
+  - 新增 blog.service.ts 服务
+
+服务端：
+  - 新增 **`blog`** 数据模型： 包含文章标题，文章内容，点赞，评论等结构
+  - 新增 **`/blogs`** 路由
+
+有待完成：
+  - 使用 **[angular2-markdown](https://github.com/dimpu/angular2-markdown)** 模块，使用markdown代替普通的文本输入框

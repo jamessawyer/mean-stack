@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
     // 在这个组件初始化前先检测重定向url是否存在
     if (this.authGuard.redirectUrl) {
       this.messageClass = 'alert alert-danger';
-      this.message = '必须登录才能查看';
+      this.message = '请先登录再能查看';
       this.priviousUrl = this.authGuard.redirectUrl; // 将重定向来的url保存
       this.authGuard.redirectUrl = undefined; // 然后将重定向的url清空
     }

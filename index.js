@@ -7,6 +7,7 @@ const cors = require('cors'); // 处理跨域
 const path = require('path');
 const config = require('./config/database');
 const authentication = require('./routes/authentication')(router);
+const blogs = require('./routes/blogs')(router);
 
 const db_url = `mongodb://${config.username}:${config.password}@${config.host}:${config.port}/${config.db}`;
 
@@ -31,6 +32,7 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname + '/client/dist/'));
 app.use('/authentication', authentication); // app.use([path,] callback [, callback...])
+app.use('/blogs', blogs);
 
 app.get('*', function(req, res) {
     res.sendFile(path.join(__dirname + '/client/dist/index.html'))

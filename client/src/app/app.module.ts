@@ -5,20 +5,23 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 
-import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app.routing.module'; // 路由
+
+import { AuthGuard } from './guards/auth.guard';  // 路由守卫
+import { NotAuthGuard } from './guards/notauth.guard';
+
+import { AppComponent } from './app.component'; // 组件
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
-
-import { AppRoutingModule } from './app.routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RegisterComponent } from './components/register/register.component';
-
-import { AuthService } from './services/auth.service';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { BlogComponent } from './components/blog/blog.component';
 
-import { AuthGuard } from './guards/auth.guard';
-import { NotAuthGuard } from './guards/notauth.guard';
+import { AuthService } from './services/auth.service'; // 服务
+import { BlogService } from './services/blog.service';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +31,8 @@ import { NotAuthGuard } from './guards/notauth.guard';
     DashboardComponent,
     RegisterComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    BlogComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +42,7 @@ import { NotAuthGuard } from './guards/notauth.guard';
     FlashMessagesModule,
     AppRoutingModule
   ],
-  providers: [AuthService, AuthGuard, NotAuthGuard],
+  providers: [AuthService, AuthGuard, NotAuthGuard, BlogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
