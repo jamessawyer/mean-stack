@@ -1,7 +1,7 @@
 // 确保用户是登录状态
 import { Injectable } from '@angular/core';
 import {
-    CanActivate, 
+    CanActivateChild, 
     Router,
     ActivatedRouteSnapshot,
     RouterStateSnapshot
@@ -9,7 +9,7 @@ import {
 import { AuthService } from '../services/auth.service';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivateChild {
 
     redirectUrl: string; // 从定向之前的url
 
@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
         private authService: AuthService,
         private router: Router
     ) {}
-    canActivate(
+    canActivateChild(
         router: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ) {
